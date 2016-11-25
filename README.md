@@ -48,3 +48,7 @@ Conjugate is licensed under the [Apache 2 License](https://github.com/siondream/
 <h3 id="demo">Demo</h3>
 
 ![conjugate demo](http://i.imgur.com/S6gkWa8.gif)
+
+
+
+http://stackoverflow.com/questions/26866147/mysql-python-install-fatal-error
