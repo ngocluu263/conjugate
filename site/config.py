@@ -2,10 +2,10 @@ import logging
 
 config = {
     'db_engine': 'mysql',
-    'db_user': 'root',
-    'db_password': '',
+    'db_user': 'stdev',
+    'db_password': 'stdev',
     'db_name': 'verbs',
-    'db_host': '127.0.0.1',
+    'db_host': '172.16.4.121',
     'db_reconnects': 5,
     'app_host': '127.0.0.1',
     'debug': True,
