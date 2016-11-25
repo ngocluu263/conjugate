@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import urllib2
+import urllib2, cookielib
 import urllib
 import httplib
 import socket
@@ -31,11 +31,14 @@ class VerbixScraper:
 
         response = self.__request(self.__post, base_url, params)
 
+        print "AAA"
+
         if response is None:
             return
 
         content = self.__get_response_content(response)
 
+        print "BBB"
         parser = verbix_parser.VerbixParser()
         return parser.get_infinitive(VerbixScraper.__languages[language], content)
 
@@ -68,7 +71,6 @@ class VerbixScraper:
         while num_attempts < VerbixScraper.__retries:
             try:
                 (success, response) = self.__try_request(make_request, url, params)
-
                 if success:
                     return response
                 else:
@@ -84,18 +86,41 @@ class VerbixScraper:
 
     def __try_request(self, make_request, url, params):
         try:
-            return make_request(url, params)
-        except (socket.error,httplib.BadStatusLine, urllib2.HTTPError, urllib2.URLError):
+            retrn = make_request(url, params)
+            return retrn
+        except Exception, e:
+            print "System error %s " % e
             return (False, None)
 
     def __get(self, url, params):
-        final_url = '%s?%s' % (url, urllib.urlencode(params))
-        logging.info('get: %s' % final_url)
-        response = urllib2.urlopen(final_url)
-        return (True, response)
+        try:
+            hdr = {
+                'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
+                'Accept-Encoding': 'none',
+                'Accept-Language': 'en-US,en;q=0.8',
+                'Connection': 'keep-alive'}
+            final_url = '%s?%s' % (url, urllib.urlencode(params))
+            logging.info('get: %s' % final_url)
+            req = urllib2.Request(final_url, headers=hdr)
+            response = urllib2.urlopen(req)
+            return (True, response)
+        except Exception, e:
+            print ("System error %s " % e)
 
     def __post(self, url, params):
-        logging.info('post: %s' % url)
-        request = urllib2.Request(url, urllib.urlencode(params))
-        response = urllib2.urlopen(request)
-        return (True, response)
+        try:
+            hdr = {
+                'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+                'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
+                'Accept-Encoding': 'none',
+                'Accept-Language': 'en-US,en;q=0.8',
+                'Connection': 'keep-alive'}
+            logging.info('post: %s' % url)
+            request = urllib2.Request(url, urllib.urlencode(params), headers=hdr)
+            response = urllib2.urlopen(request)
+            return (True, response)
+        except Exception, e:
+            print ("System error %s " % e)
