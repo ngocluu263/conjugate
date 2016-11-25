@@ -35,4 +35,7 @@ optional arguments:
   -r, --resume      Resumes process using log file
 ```
 
+
+python scrape_verbix.py verbs dictionaries/en.dic
+
 The `language` argument expects a typical language code such as `"es"` (Spanish) or `"ro"` (Romanian). The scraper needs a list of words in the target language to check if they are verbs through Verbix, hence the `dictionary` argument. The dictionary is meant to be a plain text file with one word per line.
