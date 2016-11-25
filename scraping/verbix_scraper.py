@@ -31,16 +31,15 @@ class VerbixScraper:
 
         response = self.__request(self.__post, base_url, params)
 
-        print "AAA"
-
         if response is None:
             return
 
         content = self.__get_response_content(response)
 
-        print "BBB"
         parser = verbix_parser.VerbixParser()
-        return parser.get_infinitive(VerbixScraper.__languages[language], content)
+        test_data = parser.get_infinitive(VerbixScraper.__languages[language], content)
+        #print test_data
+        return test_data
 
     def get_verb_info(self, language, verb):
         base_url = 'http://www.verbix.com/webverbix/go.php'
@@ -52,12 +51,16 @@ class VerbixScraper:
         response = self.__request(self.__get, base_url, params)
 
         if response is None:
+
             return
 
         content = self.__get_response_content(response)
-
+        #print content
         parser = verbix_parser.VerbixParser()
-        return parser.parse(content)
+
+        test_data2 = parser.parse(content)
+        print test_data2
+        return test_data2
 
     def __get_response_content(self, response):
         try:

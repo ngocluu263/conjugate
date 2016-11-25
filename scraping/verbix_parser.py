@@ -30,12 +30,17 @@ class VerbixParser:
 
     def __get_english(self, soup):
         meanings = []
-        meaning_blocks = soup.find_all('div', {'class': 'trfloatmeaning'})[:-1]
+        meaning_blocks = soup.find_all('div', {'class': 'pure-u-1-2'})[:-1]
+
+        print meaning_blocks
 
         for meaning_block in meaning_blocks:
-            description = meaning_block.h3.string.lower()
-            link = meaning_block.a.string
-
+            print meaning_block.h3.string
+            description = meaning_block.h3.string
+            #description = meaning_block.h3.string.lower()
+            #link = meaning_block.a.string
+            link = meaning_block.p.span.string
+            print meaning_block.p.span.string
             meanings.append({
                 'eng': link.string,
                 'description': description
